@@ -38,63 +38,58 @@
         <script src="https://unpkg.com/@2gis/mapgl-directions@^2/dist/directions.js"></script>
         <script src="https://telegram.org/js/telegram-web-app.js"></script>
         <script>
-
-            // function renderGeometries(geometries){
-            //     geometries.map(g =>{
-            //         new mapgl.Polyline(map,{
-            //             coordinates: g.points.map((item) => [item.lon, itemlat]),
-            //             width: 2,
-            //             color: '#00b7ff',
-            //         });
-            //     })
-            // }
-
-            function updateGeo(){
-                fetch('https://routing.api.2gis.com/public_transport/2.0?key=3536f8d5-9698-49a6-80b2-0fa347c35f8b',{
-                    method: 'POST',
-                    headers: {'Content-Type':'application/json'},
-                    body: JSON.stringify(
-                    {
-                        locale: "ru",
-                        source:{
-                            name: "firstPoint",
-                            point:{
-                                lat:51.734588,
-                                lon:36.149328
-                            }
-                        },
-                        target:{
-                            name:"secondPoint",
-                            point:{
-                                lat:51.734183,
-                                lon:36.176865
-                            }
-                        },
-                        transport: ["bus"]
-                    })
+            let ilychEscapePlan = JSON.stringify(
+                {
+                    "enable_schedule": true,
+                    "locale": "ru",
+                    "source":{
+                        "name": "A",
+                        "point":{
+                            "lat":51.734588,
+                            "lon":36.149328
+                        }
+                    },
+                    "target":{
+                        "name": "B",
+                        "point":{
+                            "lat":51.734183,
+                            "lon":36.176865
+                        }
+                    },
+                    "transport": ["bus"]
+                })
+            console.log(ilychEscapePlan)
+            let response = fetch('https://routing.api.2gis.com/combo_routes/2.0?key=3536f8d5-9698-49a6-80b2-0fa347c35f8b',{
+                method:"POST",
+                mode:"no-cors",
+                header:{'Content-Type':'application/json;charset=utf-8'},
+                body: JSON.stringify(
+                {
+                    "enable_schedule": true,
+                    "locale": "ru",
+                    "source":{
+                        "name": "A",
+                        "point":{
+                            "lat":51.734588,
+                            "lon":36.149328
+                        }
+                    },
+                    "target":{
+                        "name": "B",
+                        "point":{
+                            "lat":51.734183,
+                            "lon":36.176865
+                        }
+                    },
+                    "transport": ["bus"]
+                })
             })
-                    .then((parsed) => { console.log(updateGeo); updateGeo(parsed)});
-                }
-        </script>
+            console.log(response)
+            //let commit = response.json()
+
+    </script>
         <script>
-            let data = {
-                        locale: "ru",
-                        source:{
-                            name: "firstPoint",
-                            point:{
-                                lat:51.734588,
-                                lon:36.149328
-                            }
-                        },
-                        target:{
-                            name:"secondPoint",
-                            point:{
-                                lat:51.734183,
-                                lon:36.176865
-                            }
-                        },
-                        transport: ["bus"]
-                    }
+            
              
             const map = new mapgl.Map('container', {
                 center: [65.378365,55.44826],
